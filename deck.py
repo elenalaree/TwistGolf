@@ -1,14 +1,14 @@
 from tkinter import *
+from playsound import playsound
 import random
 from PIL import Image, ImageTk
-import pygame
 
 root = Tk()
 root.title('Twist Golf - Deck')
 # root.iconbitmap('')
 root.geometry("1500x400")
 root.configure(background="green")
-pygame.mixer.init()
+
 
 discard = []
 player1_card_flipped = [False] * 6
@@ -23,7 +23,7 @@ player2_frame = LabelFrame(my_frame, text="Player 2", bd=0, bg="green")
 player2_frame.grid(row=0, column=2, ipadx=200, ipady=200, padx=40)
 # card flip sound
 def flip_card_sound():
-    pygame.mixer.music.load("sounds/flipcard-91468.mp3")
+    playsound("./sounds/flipcard-91468.mp3")
 # Resize cards
 def resize_cards(card):
     our_card_img = Image.open(card)
@@ -200,7 +200,7 @@ def discard_pile_choice(player, i):
 def flipCard(player, index):
     # take the player and card info to create the card
     global player1_image, player2_image, player1_card_flipped, player2_card_flipped
-
+    
     if player == 1:
         card = player1[index]
         player1_image[index] = resize_cards(f'images/{card}.png')
@@ -211,10 +211,11 @@ def flipCard(player, index):
         player2_image[index] = resize_cards(f'images/{card}.png')
         player2_card[index].config(image=player2_image[index])
         player2_card_flipped[index] = True
-    flip_card_sound()
     if(all(player1_card_flipped) or all(player2_card_flipped)):
         print("Game over!")
     print(f"Flipped player {player}'s {card} index")
+    flip_card_sound()
+    
 
 
 # shuffle remaining
