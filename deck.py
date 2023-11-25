@@ -21,7 +21,9 @@ player1_frame.grid(row=0, column=0, ipadx=200, ipady=200, padx=40)
 
 player2_frame = LabelFrame(my_frame, text="Player 2", bd=0, bg="green")
 player2_frame.grid(row=0, column=2, ipadx=200, ipady=200, padx=40)
-
+# card flip sound
+def flip_card_sound():
+    pygame.mixer.music.load("sounds/flipcard-91468.mp3")
 # Resize cards
 def resize_cards(card):
     our_card_img = Image.open(card)
@@ -209,7 +211,7 @@ def flipCard(player, index):
         player2_image[index] = resize_cards(f'images/{card}.png')
         player2_card[index].config(image=player2_image[index])
         player2_card_flipped[index] = True
-
+    flip_card_sound()
     if(all(player1_card_flipped) or all(player2_card_flipped)):
         print("Game over!")
     print(f"Flipped player {player}'s {card} index")
